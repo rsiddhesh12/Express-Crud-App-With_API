@@ -1,0 +1,84 @@
+<%- include('navLink.html', { title: 'Authentication Example' }) -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- <title><%= title %></title> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+<div class="container-fluid">
+  <!-- <h2><%= title %></h2> -->
+  <!-- <a href="/logout" class="btn btn-sm btn-danger float-right">Logout</a><br/><br/> -->
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone No.</th>
+        <th>Action</th>
+      </tr>
+    </thead></br>
+    <tbody>
+      <% for(var i=0;i< users.length; i++){ %>
+            <tr>
+                <td><%= (counter*5)+(i+1) %></td>
+                <td><%= users[i].name %></td>
+                <td><%= users[i].email %></td>
+                <td><%= users[i].phone_no %></td>
+                <td>
+                    <a href="/dashboard/edit/<%= users[i].id %>" class="btn btn-sm btn-primary">Edit</a>
+                    <button type="button"  id="delete" value="<%= users[i].id %>" onclick="myFun('<%= users[i].id %>')" class="btn btn-sm btn-danger">Delete</button>
+                </td>
+            </tr>
+        <% }; %>
+    </tbody>
+  </table>
+  <a href="/users/add" class="btn btn-sm btn-primary">Add User</a>
+  <a href="/dashboard/download" class="btn btn-sm btn-primary float-right">Download</a>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link" href="/dashboard/Previous">Previous</a>
+      </li>
+      <!-- <li class="page-item"><a class="page-link" href="/dashboard">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+      <li class="page-item">
+        <a class="page-link" href="/dashboard/next">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<script type="text/javascript">
+    function myFun(userId){
+      var userId=userId;
+      let url = "http://localhost:3000/api/v1/user/" + userId;
+      $.ajax({
+        url:url,
+        type: "DELETE",
+        headers:{
+          token:"",
+        },
+        success:function(response,status){
+          // alert("User Deleted Successfully");
+          window.location.href='/dashboard';
+          console.log({response,status});
+        },
+        error : function(error,status){
+          console.log({error,status});
+        },
+      });
+     };
+</script>
+ 
+</body>
+</html>

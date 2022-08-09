@@ -1,0 +1,76 @@
+<%- include('navLink.html', { title: 'Authentication Example' }) -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+<div class="container">
+  <h2><%= title %></h2>
+  <form>
+    <div class="form-group">
+      <label for="pname">Product Name:</label>
+      <input type="text" class="form-control" id="pname" placeholder="Enter Product Name" name="pname" required>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="text" class="form-control" id="price" placeholder="Enter price" name="price" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" class="form-control" id="description" placeholder="Enter description" name="description" required>
+    </div>
+    <!-- <div class="form-group">
+        <label for="phone">Password:</label>
+        <input type="text" class="form-control" id="Password" placeholder="Enter Password" name="password" required>
+      </div> -->
+    <button  id="add" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script type="text/javascript">
+    //  function myfunction(){
+    //   const data={
+    //   pname : $('#pname').val(),
+    //   price :$('#price').val(),
+    //   description :$('#description').val()
+    // };
+    //   var req =new XMLHttpRequest();
+    //   req.open('POST','http://localhost:3000/api/v1/user/product/addProduct',false);
+    //   req.send(data);
+    //  }
+  $('#add').on("click",function(){
+    const data={
+      pname : $('input[name="pname"]').val(),
+      price :$('input[name="price"]').val(),
+      description :$('input[name="description"]').val()
+    };
+  $.ajax({
+    url:"http://localhost:3000/api/v1/user/product/addProduct",
+    type: "POST",
+    headers:{
+      token:"",
+    },
+    data,
+    success:function(response,status){
+      alert("Successfully Added the Information");
+      window.location.href='/product';
+      console.log({response,status});
+    },
+    error : function(error,status){
+      console.log({error,status});
+    },
+    });
+  });
+</script>
+ 
+</body>
+</html>

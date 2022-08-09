@@ -1,0 +1,68 @@
+<%- include('navLink.html', { title: 'Authentication Example' }) -%>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+<div class="container">
+  <h2><%= title %></h2>
+  <form>
+    <input type="hidden" value="<%= user.id %>" name="id">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter Name" value="<%= user.name %>" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" value="<%= user.email %>" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone No:</label>
+      <input type="text" class="form-control" id="phone" placeholder="Enter Phone No" value="<%= user.phone_no %>" name="phone_no" required>
+    </div>
+    <div class="form-group">
+        <label for="Password">Password:</label>
+        <input type="text" class="form-control" id="Password" placeholder="Enter Password" value="<%= user.Password %>" name="Password" required>
+      </div>
+    <button type="submitUser" id='submitUser' class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script>
+  $('#submitUser').on("click",function(){
+    const userId =$('input[name="id"]').val();
+    const data={
+      name : $('input[name="name"]').val(),
+      email :$('input[name="email"]').val(),
+      phone_no :$('input[name="phone_no"]').val(),
+      Password :$('input[name="Password"]').val()
+    };
+  $.ajax({
+    url:`http://localhost:3000/api/v1/user/${userId}`,
+    type: "POST",
+    headers:{
+      token:"",
+    },
+    data,
+    success:function(response,status){
+      alert("Successfully Edited the Information");
+      window.location.href='/dashboard';
+      console.log({response,status});
+    },
+    error : function(error,status){
+      console.log({error,status});
+    },
+    });
+  });
+</script>
+ 
+</body>
+</html>
