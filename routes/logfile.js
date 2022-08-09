@@ -6,8 +6,8 @@ const axios =require('axios');
 const AWS = require("aws-sdk");
 
 AWS.config.update({
-  accessKeyId: "AKIAZX5IKU6G4CRP6SSC",
-  secretAccessKey: "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",
+  accessKeyId: "***************************",
+  secretAccessKey: "**************************",
   // "region": "sa-east-1" 
 }); // for simplicity. In prod, use loadConfigFromFile, or env variables
 
